@@ -27,6 +27,15 @@ public class ChessGUI extends JFrame implements ActionListener {
 	
 	/** serial version UID */
     private static final long serialVersionUID = 1L;
+    
+    private final int a = 1;
+//    private final int b = 2; not needed
+    private final int c = 3;
+    private final int d = 4;
+//    private final int e = 5; can't use bc ActionEvent variable is 'e'
+    private final int f = 6;
+    private final int g = 7;
+    private final int h = 8;
 	
     /** GUI width */
     public static final int WIDTH = 700;
@@ -49,7 +58,7 @@ public class ChessGUI extends JFrame implements ActionListener {
     /** GUI setup */
     private JPanel setup;
     /** GUI constraints */
-    private GridBagConstraints c;
+    private GridBagConstraints con;
         
     /** White rook (a file) button */
     private JButton whiteRook[];            // alternative text after implementing pictures
@@ -120,7 +129,7 @@ public class ChessGUI extends JFrame implements ActionListener {
     	
         cont = getContentPane();
         setup = new JPanel( new GridBagLayout() );
-        c = new GridBagConstraints();
+        con = new GridBagConstraints();
         
         initiateSquares();
         initiateWhitePieces();
@@ -488,9 +497,9 @@ public class ChessGUI extends JFrame implements ActionListener {
 	 */
 	private void initiateLocation( JButton square, int file, int rank ) {
 		
-		c.gridx = file;
-		c.gridy = 9 - rank; // TODO change to 11?
-		c.fill = GridBagConstraints.BOTH;
+		con.gridx = file;
+		con.gridy = 9 - rank; // TODO change to 11?
+		con.fill = GridBagConstraints.BOTH;
 		
 		if ( (file != 0 && rank != 9) ) {
 			square.setOpaque(true);
@@ -506,7 +515,7 @@ public class ChessGUI extends JFrame implements ActionListener {
 		
 		square.addActionListener(this);
 					
-		setup.add(square, c);
+		setup.add(square, con);
 	}
 
 	/**
@@ -853,29 +862,53 @@ public class ChessGUI extends JFrame implements ActionListener {
 								if ( manager.isWhitesTurn() ) {
 
 									if (oldFile + 2 == i) {
-
+										
+										// squares + pieces disappear
+										jb.setVisible(false);
+										emptySquare[f][1].setVisible(false);
+										emptySquare[g][1].setVisible(false);
 										whiteRook[2].setVisible(false);
-										emptySquare[6][1].setVisible(false);
-
-										piece = initiatePiece("white_rook");
-										whiteRook[2] = new JButton(piece);
-										initiateLocation(whiteRook[2], 6, 1);
-
+										
+										// relocate king
+										piece = initiatePiece(pieceType);
+										jb = new JButton(piece);
+										initiateLocation(jb, g, 1);
+										
+										// relocate rook
+										piece2 = initiatePiece("white_rook");
+										whiteRook[2] = new JButton(piece2);
+										initiateLocation(whiteRook[2], f, 1);
+										
+										// squares + pieces reappear
+										emptySquare[5][1].setVisible(true);
 										whiteRook[2].setVisible(true);
-										emptySquare[8][1].setVisible(true);
+										jb.setVisible(true);
+										emptySquare[h][1].setVisible(true);
 									}
 
 									else if (oldFile - 2 == i) {
 
+										// squares + pieces disappear
 										whiteRook[1].setVisible(false);
-										emptySquare[4][1].setVisible(false);
-
-										piece = initiatePiece("white_rook");
-										whiteRook[1] = new JButton(piece);
-										initiateLocation(whiteRook[1], 4, 1);
-
+										emptySquare[c][1].setVisible(false);
+										emptySquare[d][1].setVisible(false);
+										jb.setVisible(false);
+										
+										// relocate king
+										piece = initiatePiece(pieceType);
+										jb = new JButton(piece);
+										initiateLocation(jb, c, 1);
+										
+										// relocate rook
+										piece2 = initiatePiece("white_rook");
+										whiteRook[2] = new JButton(piece2);
+										initiateLocation(whiteRook[1], d, 1);
+										
+										// squares + pieces reappear
+										emptySquare[a][1].setVisible(true);
+										jb.setVisible(true);
 										whiteRook[1].setVisible(true);
-										emptySquare[1][1].setVisible(true);
+										emptySquare[5][1].setVisible(true);
 									}
 								}
 
@@ -883,28 +916,52 @@ public class ChessGUI extends JFrame implements ActionListener {
 
 									if (oldFile + 2 == i) {
 
+										// squares + pieces disappear
+										jb.setVisible(false);
+										emptySquare[f][8].setVisible(false);
+										emptySquare[g][8].setVisible(false);
 										blackRook[2].setVisible(false);
-										emptySquare[6][8].setVisible(false);
-
-										piece = initiatePiece("black_rook");
-										blackRook[2] = new JButton(piece);
-										initiateLocation(blackRook[2], 6, 8);
-
+										
+										// relocate king
+										piece = initiatePiece(pieceType);
+										jb = new JButton(piece);
+										initiateLocation(jb, g, 8);
+										
+										// relocate rook
+										piece2 = initiatePiece("black_rook");
+										blackRook[2] = new JButton(piece2);
+										initiateLocation(blackRook[2], f, 8);
+										
+										// squares + pieces reappear
+										emptySquare[5][8].setVisible(true);
 										blackRook[2].setVisible(true);
-										emptySquare[8][8].setVisible(true);
+										jb.setVisible(true);
+										emptySquare[h][8].setVisible(true);
 									}
 
 									else if (oldFile - 2 == i) {
 
+										// squares + pieces disappear
 										blackRook[1].setVisible(false);
-										emptySquare[4][8].setVisible(false);
-
-										piece = initiatePiece("black_rook");
-										blackRook[1] = new JButton(piece);
-										initiateLocation(blackRook[1], 4, 8);
-
+										emptySquare[c][8].setVisible(false);
+										emptySquare[d][8].setVisible(false);
+										jb.setVisible(false);
+										
+										// relocate king
+										piece = initiatePiece(pieceType);
+										jb = new JButton(piece);
+										initiateLocation(jb, c, 8);
+										
+										// relocate rook
+										piece2 = initiatePiece("black_rook");
+										blackRook[2] = new JButton(piece2);
+										initiateLocation(blackRook[1], d, 8);
+										
+										// squares + pieces reappear
+										emptySquare[a][8].setVisible(true);
+										jb.setVisible(true);
 										blackRook[1].setVisible(true);
-										emptySquare[1][8].setVisible(true);
+										emptySquare[5][8].setVisible(true);
 									}
 								}
 							}
